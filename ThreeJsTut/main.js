@@ -3,6 +3,8 @@ import * as THREE from 'three';
 import moonJPG from './assets/moon.jpg';
 import normalJPG from './assets/normal.jpg';
 import spaceJPG from './assets/space.jpg';
+import gerJPG from './assets/ger.jpg';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 console.log(moonJPG)
 const scene = new THREE.Scene();
@@ -19,7 +21,7 @@ camera.position.setZ(30);
 camera.position.setX(-3);
 renderer.render(scene, camera);
 
-const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
+const geometry = new THREE.TorusGeometry(20, 1, 10, 50);
 const material = new THREE.MeshStandardMaterial({color: 0xFF6347 });
 
 const torus = new THREE.Mesh(geometry, material);
@@ -41,11 +43,12 @@ const moon = new THREE.Mesh(
   })
 )
 
-//scene.add(torus)
+scene.add(torus)
 scene.add(pointLight, ambientLight);
 
-// moon.position.setZ(30)
-// moon.position.setX(-5)
+torus.position.setY(0)
+torus.position.setZ(0)
+torus.position.setX(0)
 
 scene.add(moon)
 
@@ -67,16 +70,20 @@ function addStar() {
 }
 Array(200).fill().forEach(addStar);
 
+const controls = new OrbitControls(camera, renderer.domElement)
+
+const gerTexture = new THREE.TextureLoader().load(gerJPG);
+const ger = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshBasicMaterial({ map: gerTexture }));
+scene.add(ger);
+ger.position.set(10,10,10)
+
 function animate() {
   requestAnimationFrame(animate);
 
-  //moon.rotation.x += 0.01;
-  moon.rotation.y += 0.005;
-  //moon.rotation.z += 0.01;
-
-  //moon.rotation.x += 0.005;
-
-  // controls.update();
+ 
+  moon.rotation.y += 0.0005;
+  torus.rotation.x -= 0.005;
+  controls.update();
 
   renderer.render(scene, camera);
 }
