@@ -70,9 +70,9 @@ Array(200).fill().forEach(addStar);
 function animate() {
   requestAnimationFrame(animate);
 
-  moon.rotation.x += 0.01;
+  //moon.rotation.x += 0.01;
   moon.rotation.y += 0.005;
-  moon.rotation.z += 0.01;
+  //moon.rotation.z += 0.01;
 
   //moon.rotation.x += 0.005;
 
